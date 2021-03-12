@@ -20,7 +20,7 @@
     "autoprefixer": "^10.2.4",
     "globby": "^11.0.2",
     "moment-timezone": "^0.5.33",
-    "next": "latest",
+    "next": "10.0.7",
     "next-pwa": "^5.0.5",
     "next-seo": "^4.19.0",
     "postcss": "^8.2.5",
