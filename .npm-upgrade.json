@@ -1,8 +1,0 @@
-{
-  "ignore": {
-    "webpack": {
-      "versions": "5.21.2",
-      "reason": "Not compatible with next-pwa"
-    }
-  }
-}
