@@ -1,7 +1,7 @@
 // Use the SentryWebpack plugin to upload the source maps during build step
 const SentryWebpackPlugin = require('@sentry/webpack-plugin')
 const withSourceMaps = require('@zeit/next-source-maps')
-const withPWA = require('next-pwa')
+const withOffline = require('next-offline')
 const {
   NEXT_PUBLIC_SENTRY_DSN: SENTRY_DSN,
   SENTRY_ORG,
@@ -21,7 +21,7 @@ const COMMIT_SHA =
 process.env.SENTRY_DSN = SENTRY_DSN
 const basePath = ''
 
-module.exports = withPWA(withSourceMaps({
+module.exports = withOffline(withSourceMaps({
   productionBrowserSourceMaps: true,
   poweredByHeader: false,
   i18n: {

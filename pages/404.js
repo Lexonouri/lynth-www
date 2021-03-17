@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import {NextSeo} from "next-seo"
 import Image from "next/image"
-import Link from 'next/link'
+import * as styles from '../css/Error.module.css'
 
-class Error extends Component {
+class NotFoundError extends Component {
   render() {
     return (
       <React.Fragment>
@@ -38,18 +38,14 @@ class Error extends Component {
         </div>
 
         <div className="relative flex flex-col items-center lg:justify-center h-full w-full lg:h-screen z-0">
-          <p className="text-white text-9xl font-medium">
-            404
-          </p>
-          <p className="text-white text-4xl mt-6">
-            We can't find that
-          </p>
-          <Link href='/'>
-            <a
-              className="mt-6 px-6 py-2 border-2 rounded-full text-white hover:bg-white hover:text-black transition-all">
-              Home page
-            </a>
-          </Link>
+          <span className="transform scale-150">
+            <p data-text={'Error'} className={'text-white font-medium ' + styles.glitch}>Error</p>
+            <p></p>
+          </span>
+          <span className="mt-8">
+            <p data-text={'Not found'} className={'text-white font-medium ' + styles.glitch}>Not found</p>
+            <p></p>
+          </span>
         </div>
 
       </React.Fragment>
@@ -57,4 +53,4 @@ class Error extends Component {
   }
 }
 
-export default Error;
+export default NotFoundError;
