@@ -53,7 +53,7 @@ export default function Home() {
 
             <Link href='https://join.lynth.space/'>
               <a
-                className="border-2 border-transparent rounded-md px-8 py-6 hover:border-blue-400 bg-gray-900 transition-all shadow-xl cursor-pointer"
+                className="border-2 border-transparent rounded-md px-8 py-6 hover:border-blue-400 bg-gray-900 bg-opacity-25 backdrop-blur transition-all shadow-xl cursor-pointer"
                 target="_blank" rel="noreferrer">
                 <p
                   className="px-3 py-1 mb-4 inline-flex text-md leading-5 font-normal rounded-full bg-green-100 text-black">{__('available')}</p>
@@ -64,7 +64,7 @@ export default function Home() {
 
             <Link href='https://discord.lynth.io/'>
               <a
-                className="border-2 border-transparent rounded-md px-8 py-6 hover:border-blue-400 bg-gray-900 transition-all shadow-xl cursor-pointer"
+                className="border-2 border-transparent rounded-md px-8 py-6 hover:border-blue-400 bg-gray-900 bg-opacity-25 backdrop-blur transition-all shadow-xl cursor-pointer"
                 onClick={() => {
                   gtag.event({action: 'discord_inv', category: 'Discord CTA', label: 'Discord invitation redirect'})
                 }}
@@ -78,7 +78,7 @@ export default function Home() {
 
             <Link href='/status'>
               <a
-                className="border-2 border-transparent rounded-md px-8 py-6 hover:border-blue-400 bg-gray-900 transition-all shadow-xl cursor-pointer"
+                className="border-2 border-transparent rounded-md px-8 py-6 hover:border-blue-400 bg-gray-900 bg-opacity-25 backdrop-blur transition-all shadow-xl cursor-pointer"
                 rel="noreferrer">
                 <p
                   className="px-3 py-1 mb-4 inline-flex text-md leading-5 font-normal rounded-full bg-green-100 text-black">{__('available')}</p>
@@ -88,7 +88,7 @@ export default function Home() {
             </Link>
 
             <span
-              className="border-2 border-transparent rounded-md px-8 py-6 hover:border-red-400 bg-gray-900 transition-all shadow-xl cursor-default">
+              className="border-2 border-transparent rounded-md px-8 py-6 hover:border-red-400 bg-gray-900 bg-opacity-25 backdrop-blur transition-all shadow-xl cursor-default">
               <p
                 className="px-3 py-1 mb-4 inline-flex text-md leading-5 font-normal rounded-full bg-red-100 text-black">{__('comingSoon')}</p>
               <p className="text-white text-4xl">{__('card4title')} &rarr;</p>
@@ -96,7 +96,7 @@ export default function Home() {
             </span>
 
             <span
-              className="border-2 border-transparent rounded-md px-8 py-6 hover:border-red-400 bg-gray-900 transition-all shadow-xl cursor-default">
+              className="border-2 border-transparent rounded-md px-8 py-6 hover:border-red-400 bg-gray-900 bg-opacity-25 backdrop-blur transition-all shadow-xl cursor-default">
               <p
                 className="px-3 py-1 mb-4 inline-flex text-md leading-5 font-normal rounded-full bg-red-100 text-black">{__('comingSoon')}</p>
               <p className="text-white text-4xl">{__('card5title')} &rarr;</p>
