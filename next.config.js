@@ -24,7 +24,19 @@ const basePath = ''
 
 module.exports = withOffline(withSourceMaps({
   async headers() {
-    return [{ source: "/(.*)", headers: createSecureHeaders() }];
+    return [{
+      source: "/(.*)",
+      headers: createSecureHeaders({
+        contentSecurityPolicy: {
+          directives: {
+            defaultSrc: "'self'",
+            styleSrc: ["'self'", process.env.VERCEL_URL],
+          },
+        },
+        forceHTTPSRedirect: [true, { maxAge: 60 * 60 * 24 * 4, includeSubDomains: true }],
+        referrerPolicy: "same-origin",
+      })
+    }];
   },
   productionBrowserSourceMaps: true,
   poweredByHeader: false,
