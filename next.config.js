@@ -2,6 +2,7 @@
 const SentryWebpackPlugin = require('@sentry/webpack-plugin')
 const withSourceMaps = require('@zeit/next-source-maps')
 const withOffline = require('next-offline')
+const { createSecureHeaders } = require("next-secure-headers")
 const {
   NEXT_PUBLIC_SENTRY_DSN: SENTRY_DSN,
   SENTRY_ORG,
@@ -22,6 +23,9 @@ process.env.SENTRY_DSN = SENTRY_DSN
 const basePath = ''
 
 module.exports = withOffline(withSourceMaps({
+  async headers() {
+    return [{ source: "/(.*)", headers: createSecureHeaders() }];
+  },
   productionBrowserSourceMaps: true,
   poweredByHeader: false,
   i18n: {
