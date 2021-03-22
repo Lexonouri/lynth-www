@@ -29,6 +29,7 @@
     "react-moment": "^1.1.1",
     "tailwindcss": "^2.0.3",
     "tailwindcss-filters": "^3.0.0",
-    "webpack": "^5.26.2"
+    "webpack": "^5.26.2",
+    "webpack-subresource-integrity": "^1.5.2"
   }
 }
