@@ -3,6 +3,8 @@ const SentryWebpackPlugin = require('@sentry/webpack-plugin')
 const withSourceMaps = require('@zeit/next-source-maps')
 const withOffline = require('next-offline')
 const { createSecureHeaders } = require("next-secure-headers")
+const SriPlugin = require("webpack-subresource-integrity");
+
 const {
   NEXT_PUBLIC_SENTRY_DSN: SENTRY_DSN,
   SENTRY_ORG,
@@ -29,13 +31,26 @@ module.exports = withOffline(withSourceMaps({
       headers: createSecureHeaders({
         contentSecurityPolicy: {
           directives: {
-            defaultSrc: "'self'",
-            styleSrc: ["'self'", process.env.VERCEL_URL],
+            defaultSrc: [
+              "'self'"
+            ],
+            styleSrc: ["'self'", "'unsafe-inline'"],
+            imgSrc: ["'self'"],
+            baseUri: "self",
+            formAction: "self",
+            frameAncestors: true,
           },
         },
-        forceHTTPSRedirect: [true, { maxAge: 60 * 60 * 24 * 4, includeSubDomains: true }],
+        frameGuard: "deny",
+        noopen: "noopen",
+        nosniff: "nosniff",
+        xssProtection: "sanitize",
+        forceHTTPSRedirect: [
+          true,
+          { maxAge: 60 * 60 * 24 * 360, includeSubDomains: true },
+        ],
         referrerPolicy: "same-origin",
-      })
+      }),
     }];
   },
   productionBrowserSourceMaps: true,
@@ -88,6 +103,14 @@ module.exports = withOffline(withSourceMaps({
         ),
       })
     )
+
+    config.output.crossOriginLoading = "anonymous";
+    config.plugins.push(
+      new SriPlugin({
+        hashFuncNames: ["sha256", "sha384"],
+        enabled: true,
+      })
+    );
 
     // When all the Sentry configuration env variables are available/configured
     // The Sentry webpack plugin gets pushed to the webpack plugins to build
