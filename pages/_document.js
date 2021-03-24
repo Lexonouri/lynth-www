@@ -9,7 +9,8 @@ function getCsp(nonce) {
   csp += `base-uri 'self';`;
   csp += `form-action 'self';`;
   csp += `default-src 'self';`;
-  csp += `script-src 'self' 'nonce-${nonce}' www.googletagmanager.com *.ingest.sentry.io ${process.env.NODE_ENV === "production" ? "" : "'unsafe-eval'"} 'unsafe-inline';`;
+  csp += `connect-src 'self' vitals.vercel-insights.com www.google-analytics.com;`;
+  csp += `script-src 'self' 'nonce-${nonce}' www.googletagmanager.com *.ingest.sentry.io www.google-analytics.com ${process.env.NODE_ENV === "production" ? "" : "'unsafe-eval'"} 'unsafe-inline';`;
   csp += `style-src 'self' 'unsafe-inline' data:;`;
   csp += `img-src 'self' data: blob:;`;
   csp += `frame-src *;`;

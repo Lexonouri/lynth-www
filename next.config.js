@@ -105,9 +105,24 @@ module.exports = withSourceMaps({
       headers: createSecureHeaders({
         contentSecurityPolicy: {
           directives: {
-            defaultSrc: ["'self'"],
-            styleSrc: ["'self'", "'unsafe-inline'", "data:"],
-            imgSrc: ["'self'", "data:", "blob:"],
+            defaultSrc: [
+              "'self'"
+            ],
+            connectSrc: [
+              "'self'",
+              "vitals.vercel-insights.com",
+              "www.google-analytics.com"
+            ],
+            styleSrc: [
+              "'self'",
+              "'unsafe-inline'",
+              "data:"
+            ],
+            imgSrc: [
+              "'self'",
+              "data:",
+              "blob:"
+            ],
             scriptSrc: [
               "'self'",
               process.env.NODE_ENV === "production" ? "" : "'unsafe-eval'",
