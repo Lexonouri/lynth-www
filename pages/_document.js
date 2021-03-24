@@ -9,6 +9,7 @@ function getCsp(nonce) {
   csp += `base-uri 'self';`;
   csp += `form-action 'self';`;
   csp += `default-src 'self';`;
+  csp += `font-src 'self' script.hotjar.com;`;
   csp += `connect-src 'self' vitals.vercel-insights.com www.google-analytics.com;`;
   csp += `script-src 'self' 'nonce-${nonce}' www.googletagmanager.com *.ingest.sentry.io www.google-analytics.com static.hotjar.com script.hotjar.com ${process.env.NODE_ENV === "production" ? "" : "'unsafe-eval'"} 'unsafe-inline';`;
   csp += `style-src 'self' 'unsafe-inline' data:;`;

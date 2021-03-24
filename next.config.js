@@ -108,6 +108,10 @@ module.exports = withSourceMaps({
             defaultSrc: [
               "'self'"
             ],
+            fontSrc: [
+              "'self'",
+              "script.hotjar.com"
+            ],
             connectSrc: [
               "'self'",
               "vitals.vercel-insights.com",
