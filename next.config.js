@@ -1,9 +1,8 @@
 // Use the SentryWebpack plugin to upload the source maps during build step
 const SentryWebpackPlugin = require('@sentry/webpack-plugin')
 const withSourceMaps = require('@zeit/next-source-maps')
-const withOffline = require('next-offline')
 const { createSecureHeaders } = require("next-secure-headers")
-const SriPlugin = require("webpack-subresource-integrity");
+const SriPlugin = require("webpack-subresource-integrity")
 
 const {
   NEXT_PUBLIC_SENTRY_DSN: SENTRY_DSN,
@@ -24,35 +23,7 @@ const COMMIT_SHA =
 process.env.SENTRY_DSN = SENTRY_DSN
 const basePath = ''
 
-module.exports = withOffline(withSourceMaps({
-  async headers() {
-    return [{
-      source: "/(.*)",
-      headers: createSecureHeaders({
-        contentSecurityPolicy: {
-          directives: {
-            defaultSrc: [
-              "'self'"
-            ],
-            styleSrc: ["'self'", "'unsafe-inline'"],
-            imgSrc: ["'self'"],
-            baseUri: "self",
-            formAction: "self",
-            frameAncestors: true,
-          },
-        },
-        frameGuard: "deny",
-        noopen: "noopen",
-        nosniff: "nosniff",
-        xssProtection: "sanitize",
-        forceHTTPSRedirect: [
-          true,
-          { maxAge: 60 * 60 * 24 * 360, includeSubDomains: true },
-        ],
-        referrerPolicy: "same-origin",
-      }),
-    }];
-  },
+module.exports = withSourceMaps({
   productionBrowserSourceMaps: true,
   poweredByHeader: false,
   i18n: {
@@ -137,5 +108,35 @@ module.exports = withOffline(withSourceMaps({
     }
     return config
   },
+  async headers() {
+    return [{
+      source: '/:path*',
+      headers: createSecureHeaders({
+        contentSecurityPolicy: {
+          directives: {
+            defaultSrc: ["'self'"],
+            styleSrc: ["'self'", "'unsafe-inline'", "data:"],
+            imgSrc: ["'self'", "data:", "blob:"],
+            scriptSrc: [
+              "'self'",
+              process.env.NODE_ENV === "production" ? "" : "'unsafe-eval'"
+            ],
+            baseUri: "self",
+            formAction: "self",
+            frameAncestors: true,
+          },
+        },
+        frameGuard: "deny",
+        noopen: "noopen",
+        nosniff: "nosniff",
+        xssProtection: "sanitize",
+        forceHTTPSRedirect: [
+          true,
+          { maxAge: 60 * 60 * 24 * 360, includeSubDomains: true },
+        ],
+        referrerPolicy: "same-origin",
+      }),
+    }];
+  },
   basePath,
-}))
+})
