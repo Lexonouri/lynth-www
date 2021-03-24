@@ -127,6 +127,8 @@ module.exports = withSourceMaps({
               "'self'",
               process.env.NODE_ENV === "production" ? "" : "'unsafe-eval'",
               "www.googletagmanager.com",
+              "www.google-analytics.com",
+              "static.hotjar.com",
               "*.ingest.sentry.io",
               "'unsafe-inline'"
             ],
