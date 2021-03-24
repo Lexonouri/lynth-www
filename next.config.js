@@ -2,7 +2,6 @@
 const SentryWebpackPlugin = require('@sentry/webpack-plugin')
 const withSourceMaps = require('@zeit/next-source-maps')
 const { createSecureHeaders } = require("next-secure-headers")
-const SriPlugin = require("webpack-subresource-integrity")
 
 const {
   NEXT_PUBLIC_SENTRY_DSN: SENTRY_DSN,
@@ -74,14 +73,6 @@ module.exports = withSourceMaps({
         ),
       })
     )
-
-    config.output.crossOriginLoading = "anonymous";
-    config.plugins.push(
-      new SriPlugin({
-        hashFuncNames: ["sha256", "sha384"],
-        enabled: true,
-      })
-    );
 
     // When all the Sentry configuration env variables are available/configured
     // The Sentry webpack plugin gets pushed to the webpack plugins to build
