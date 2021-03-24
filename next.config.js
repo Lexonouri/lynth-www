@@ -118,8 +118,13 @@ module.exports = withSourceMaps({
               "'unsafe-inline'",
               "data:"
             ],
+            frameSrc: [
+              "'self'",
+              "vars.hotjar.com"
+            ],
             imgSrc: [
               "'self'",
+              "www.google-analytics.com",
               "data:",
               "blob:"
             ],
@@ -129,6 +134,7 @@ module.exports = withSourceMaps({
               "www.googletagmanager.com",
               "www.google-analytics.com",
               "static.hotjar.com",
+              "script.hotjar.com",
               "*.ingest.sentry.io",
               "'unsafe-inline'"
             ],
