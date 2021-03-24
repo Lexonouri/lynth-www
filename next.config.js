@@ -22,6 +22,68 @@ const COMMIT_SHA =
 process.env.SENTRY_DSN = SENTRY_DSN
 const basePath = ''
 
+const global_headers = createSecureHeaders({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: [
+        "'self'"
+      ],
+      fontSrc: [
+        "'self'",
+        "script.hotjar.com"
+      ],
+      connectSrc: [
+        "'self'",
+        "vitals.vercel-insights.com",
+        "*.ingest.sentry.io",
+        "www.google-analytics.com"
+      ],
+      styleSrc: [
+        "'self'",
+        "'unsafe-inline'",
+        "data:"
+      ],
+      frameSrc: [
+        "'self'",
+        "vars.hotjar.com"
+      ],
+      imgSrc: [
+        "'self'",
+        "www.google-analytics.com",
+        "data:",
+        "blob:"
+      ],
+      scriptSrc: [
+        "'self'",
+        process.env.NODE_ENV === "production" ? "" : "'unsafe-eval'",
+        "www.googletagmanager.com",
+        "www.google-analytics.com",
+        "static.hotjar.com",
+        "script.hotjar.com",
+        "*.ingest.sentry.io",
+        "'unsafe-inline'"
+      ],
+      baseUri: "self",
+      formAction: "self",
+      frameAncestors: true,
+    },
+  },
+  frameGuard: "deny",
+  noopen: "noopen",
+  nosniff: "nosniff",
+  xssProtection: "sanitize",
+  forceHTTPSRedirect: [
+    true,
+    { maxAge: 60 * 60 * 24 * 360, includeSubDomains: true },
+  ],
+  referrerPolicy: "same-origin",
+});
+
+global_headers.push({
+  key: 'Permission-Policy',
+  value: `camera=(),fullscreen=()`
+})
+
 module.exports = withSourceMaps({
   productionBrowserSourceMaps: true,
   poweredByHeader: false,
@@ -102,62 +164,7 @@ module.exports = withSourceMaps({
   async headers() {
     return [{
       source: '/:path*',
-      headers: createSecureHeaders({
-        contentSecurityPolicy: {
-          directives: {
-            defaultSrc: [
-              "'self'"
-            ],
-            fontSrc: [
-              "'self'",
-              "script.hotjar.com"
-            ],
-            connectSrc: [
-              "'self'",
-              "vitals.vercel-insights.com",
-              "*.ingest.sentry.io",
-              "www.google-analytics.com"
-            ],
-            styleSrc: [
-              "'self'",
-              "'unsafe-inline'",
-              "data:"
-            ],
-            frameSrc: [
-              "'self'",
-              "vars.hotjar.com"
-            ],
-            imgSrc: [
-              "'self'",
-              "www.google-analytics.com",
-              "data:",
-              "blob:"
-            ],
-            scriptSrc: [
-              "'self'",
-              process.env.NODE_ENV === "production" ? "" : "'unsafe-eval'",
-              "www.googletagmanager.com",
-              "www.google-analytics.com",
-              "static.hotjar.com",
-              "script.hotjar.com",
-              "*.ingest.sentry.io",
-              "'unsafe-inline'"
-            ],
-            baseUri: "self",
-            formAction: "self",
-            frameAncestors: true,
-          },
-        },
-        frameGuard: "deny",
-        noopen: "noopen",
-        nosniff: "nosniff",
-        xssProtection: "sanitize",
-        forceHTTPSRedirect: [
-          true,
-          { maxAge: 60 * 60 * 24 * 360, includeSubDomains: true },
-        ],
-        referrerPolicy: "same-origin",
-      }),
+      headers: global_headers,
     }];
   },
   basePath,
