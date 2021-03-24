@@ -80,7 +80,7 @@ const global_headers = createSecureHeaders({
 });
 
 global_headers.push({
-  key: 'Permission-Policy',
+  key: 'Permissions-Policy',
   value: `camera=(),fullscreen=()`
 })
 
