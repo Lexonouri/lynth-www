@@ -60,8 +60,7 @@ const global_headers = createSecureHeaders({
         "www.google-analytics.com",
         "static.hotjar.com",
         "script.hotjar.com",
-        "*.ingest.sentry.io",
-        "'unsafe-inline'"
+        "*.ingest.sentry.io"
       ],
       baseUri: "self",
       formAction: "self",
