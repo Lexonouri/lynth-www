@@ -12,11 +12,11 @@ class MyDocument extends Document {
   }
 
   render() {
-    const {isProduction} = this.props
+    const {isProduction, nonce} = this.props
 
     return (
       <Html lang="en" style={{background: '#000000'}}>
-        <Head>
+        <Head {...{ nonce }}>
           <link rel="preconnect" href="https://www.lynth.io/_next/static/" crossOrigin=""/>
           <link rel="preconnect" href="https://in.hotjar.com" crossOrigin=""/>
           <link rel="preconnect" href="https://ws8.hotjar.com" crossOrigin=""/>
@@ -89,7 +89,7 @@ class MyDocument extends Document {
         )}
 
         <Main/>
-        <NextScript/>
+        <NextScript {...{ nonce }}/>
 
         </body>
       </Html>
