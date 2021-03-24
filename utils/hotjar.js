@@ -5,6 +5,7 @@ class Hotjar extends Component {
     return (
       <React.Fragment>
         <script
+          nonce={this.props.nonce}
           dangerouslySetInnerHTML={{
             __html: `
                     (function(h,o,t,j,a,r){

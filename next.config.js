@@ -2,7 +2,6 @@
 const SentryWebpackPlugin = require('@sentry/webpack-plugin')
 const withSourceMaps = require('@zeit/next-source-maps')
 const { createSecureHeaders } = require("next-secure-headers")
-const SriPlugin = require("webpack-subresource-integrity")
 
 const {
   NEXT_PUBLIC_SENTRY_DSN: SENTRY_DSN,
@@ -75,14 +74,6 @@ module.exports = withSourceMaps({
       })
     )
 
-    config.output.crossOriginLoading = "anonymous";
-    config.plugins.push(
-      new SriPlugin({
-        hashFuncNames: ["sha256", "sha384"],
-        enabled: true,
-      })
-    );
-
     // When all the Sentry configuration env variables are available/configured
     // The Sentry webpack plugin gets pushed to the webpack plugins to build
     // and upload the source maps to sentry.
@@ -114,15 +105,42 @@ module.exports = withSourceMaps({
       headers: createSecureHeaders({
         contentSecurityPolicy: {
           directives: {
-            defaultSrc: ["'self'"],
-            styleSrc: ["'self'", "'unsafe-inline'", "data:"],
-            imgSrc: ["'self'", "data:", "blob:"],
+            defaultSrc: [
+              "'self'"
+            ],
+            fontSrc: [
+              "'self'",
+              "script.hotjar.com"
+            ],
+            connectSrc: [
+              "'self'",
+              "vitals.vercel-insights.com",
+              "www.google-analytics.com"
+            ],
+            styleSrc: [
+              "'self'",
+              "'unsafe-inline'",
+              "data:"
+            ],
+            frameSrc: [
+              "'self'",
+              "vars.hotjar.com"
+            ],
+            imgSrc: [
+              "'self'",
+              "www.google-analytics.com",
+              "data:",
+              "blob:"
+            ],
             scriptSrc: [
               "'self'",
               process.env.NODE_ENV === "production" ? "" : "'unsafe-eval'",
               "www.googletagmanager.com",
+              "www.google-analytics.com",
+              "static.hotjar.com",
+              "script.hotjar.com",
               "*.ingest.sentry.io",
-              'unsafe-inline'
+              "'unsafe-inline'"
             ],
             baseUri: "self",
             formAction: "self",

@@ -1,22 +1,41 @@
-import Document, {Html, Head, Main, NextScript} from 'next/document';
+import Document, {Html, Head, Main, NextScript} from 'next/document'
 import React from 'react'
-import Hotjar from "../utils/hotjar";
-import {GA_TRACKING_ID} from "../utils/gtag";
+import Hotjar from "../utils/hotjar"
+import {GA_TRACKING_ID} from "../utils/gtag"
+import crypto from 'crypto'
+
+function getCsp(nonce) {
+  let csp = ``;
+  csp += `base-uri 'self';`;
+  csp += `form-action 'self';`;
+  csp += `default-src 'self';`;
+  csp += `font-src 'self' script.hotjar.com;`;
+  csp += `connect-src 'self' vitals.vercel-insights.com www.google-analytics.com;`;
+  csp += `script-src 'self' 'nonce-${nonce}' www.googletagmanager.com *.ingest.sentry.io www.google-analytics.com static.hotjar.com script.hotjar.com ${process.env.NODE_ENV === "production" ? "" : "'unsafe-eval'"} 'unsafe-inline';`;
+  csp += `style-src 'self' 'unsafe-inline' data:;`;
+  csp += `img-src 'self' www.google-analytics.com data: blob:;`;
+  csp += `frame-src *;`;
+  csp += `media-src *;`;
+  return csp;
+}
 
 class MyDocument extends Document {
 
   static async getInitialProps(ctx) {
     const initialProps = await Document.getInitialProps(ctx)
     const isProduction = process.env.NODE_ENV === 'production'
-    return {...initialProps, isProduction}
+    const nonce = crypto.randomBytes(8).toString("base64");
+    return {...initialProps, isProduction, nonce}
   }
 
   render() {
-    const {isProduction} = this.props
+    const {isProduction, nonce} = this.props
 
     return (
       <Html lang="en" style={{background: '#000000'}}>
-        <Head>
+        <Head nonce={nonce}>
+          <meta httpEquiv="Content-Security-Policy" content={getCsp(nonce)} />
+          <meta name="referrer" content="same-origin" />
           <link rel="preconnect" href="https://www.lynth.io/_next/static/" crossOrigin=""/>
           <link rel="preconnect" href="https://in.hotjar.com" crossOrigin=""/>
           <link rel="preconnect" href="https://ws8.hotjar.com" crossOrigin=""/>
@@ -48,10 +67,12 @@ class MyDocument extends Document {
           {isProduction && (
             <React.Fragment>
               <script
+                nonce={nonce}
                 async
                 src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
               />
               <script
+                nonce={nonce}
                 dangerouslySetInnerHTML={{
                   __html: `
                     window.dataLayer = window.dataLayer || [];
@@ -65,6 +86,7 @@ class MyDocument extends Document {
                 }}
               />
               <script
+                nonce={nonce}
                 dangerouslySetInnerHTML={{
                   __html: `
                     (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -75,7 +97,7 @@ class MyDocument extends Document {
                   `,
                 }}
               />
-              <Hotjar hjid={process.env.hjid} hjsv={process.env.hjsv}/>
+              <Hotjar nonce={nonce} hjid={process.env.hjid} hjsv={process.env.hjsv}/>
             </React.Fragment>
           )}
         </Head>
@@ -89,7 +111,7 @@ class MyDocument extends Document {
         )}
 
         <Main/>
-        <NextScript/>
+        <NextScript nonce={nonce}/>
 
         </body>
       </Html>
