@@ -119,7 +119,10 @@ module.exports = withSourceMaps({
             imgSrc: ["'self'", "data:", "blob:"],
             scriptSrc: [
               "'self'",
-              "'unsafe-eval'"
+              process.env.NODE_ENV === "production" ? "" : "'unsafe-eval'",
+              "www.googletagmanager.com",
+              "*.ingest.sentry.io",
+              'unsafe-inline'
             ],
             baseUri: "self",
             formAction: "self",
