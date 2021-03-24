@@ -115,6 +115,7 @@ module.exports = withSourceMaps({
             connectSrc: [
               "'self'",
               "vitals.vercel-insights.com",
+              "*.ingest.sentry.io",
               "www.google-analytics.com"
             ],
             styleSrc: [
