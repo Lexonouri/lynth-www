@@ -1,14 +1,29 @@
-import Document, {Html, Head, Main, NextScript} from 'next/document';
+import Document, {Html, Head, Main, NextScript} from 'next/document'
 import React from 'react'
-import Hotjar from "../utils/hotjar";
-import {GA_TRACKING_ID} from "../utils/gtag";
+import Hotjar from "../utils/hotjar"
+import {GA_TRACKING_ID} from "../utils/gtag"
+import crypto from 'crypto'
+
+function getCsp(nonce) {
+  let csp = ``;
+  csp += `base-uri 'self';`;
+  csp += `form-action 'self';`;
+  csp += `default-src 'self';`;
+  csp += `script-src 'self' 'nonce-${nonce}' www.googletagmanager.com *.ingest.sentry.io ${process.env.NODE_ENV === "production" ? "" : "'unsafe-eval'"} 'unsafe-inline';`;
+  csp += `style-src 'self' 'unsafe-inline' data:;`;
+  csp += `img-src 'self' data: blob:;`;
+  csp += `frame-src *;`;
+  csp += `media-src *;`;
+  return csp;
+}
 
 class MyDocument extends Document {
 
   static async getInitialProps(ctx) {
     const initialProps = await Document.getInitialProps(ctx)
     const isProduction = process.env.NODE_ENV === 'production'
-    return {...initialProps, isProduction}
+    const nonce = crypto.randomBytes(8).toString("base64");
+    return {...initialProps, isProduction, nonce}
   }
 
   render() {
@@ -16,7 +31,9 @@ class MyDocument extends Document {
 
     return (
       <Html lang="en" style={{background: '#000000'}}>
-        <Head {...{ nonce }}>
+        <Head nonce={nonce}>
+          <meta httpEquiv="Content-Security-Policy" content={getCsp(nonce)} />
+          <meta name="referrer" content="same-origin" />
           <link rel="preconnect" href="https://www.lynth.io/_next/static/" crossOrigin=""/>
           <link rel="preconnect" href="https://in.hotjar.com" crossOrigin=""/>
           <link rel="preconnect" href="https://ws8.hotjar.com" crossOrigin=""/>
@@ -89,7 +106,7 @@ class MyDocument extends Document {
         )}
 
         <Main/>
-        <NextScript {...{ nonce }}/>
+        <NextScript nonce={nonce}/>
 
         </body>
       </Html>
