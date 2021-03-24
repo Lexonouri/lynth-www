@@ -65,10 +65,12 @@ class MyDocument extends Document {
           {isProduction && (
             <React.Fragment>
               <script
+                nonce={nonce}
                 async
                 src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
               />
               <script
+                nonce={nonce}
                 dangerouslySetInnerHTML={{
                   __html: `
                     window.dataLayer = window.dataLayer || [];
@@ -82,6 +84,7 @@ class MyDocument extends Document {
                 }}
               />
               <script
+                nonce={nonce}
                 dangerouslySetInnerHTML={{
                   __html: `
                     (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -92,7 +95,7 @@ class MyDocument extends Document {
                   `,
                 }}
               />
-              <Hotjar hjid={process.env.hjid} hjsv={process.env.hjsv}/>
+              <Hotjar nonce={nonce} hjid={process.env.hjid} hjsv={process.env.hjsv}/>
             </React.Fragment>
           )}
         </Head>
