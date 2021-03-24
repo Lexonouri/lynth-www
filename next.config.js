@@ -119,7 +119,7 @@ module.exports = withSourceMaps({
             imgSrc: ["'self'", "data:", "blob:"],
             scriptSrc: [
               "'self'",
-              process.env.NODE_ENV === "production" ? "" : "'unsafe-eval'"
+              "'unsafe-eval'"
             ],
             baseUri: "self",
             formAction: "self",
