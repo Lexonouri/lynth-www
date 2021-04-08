@@ -1,18 +1,18 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from "next/router"
-import { useIntl } from "react-intl"
+import {useRouter} from "next/router"
+import {useIntl} from "react-intl"
 import * as gtag from '../utils/gtag'
 
 export default function Home() {
-  const { formatMessage } = useIntl()
-  const __ = id => formatMessage({ id })
+  const {formatMessage} = useIntl()
+  const __ = id => formatMessage({id})
   const router = useRouter()
-  const { locale, locales, defaultLocale } = router
+  const {locale, locales, defaultLocale} = router
 
   return (
-    <React.Fragment>
+      <React.Fragment>
 
       <div className="fixed top-0 left-0 w-screen h-screen">
         <Image

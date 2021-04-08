@@ -123,7 +123,7 @@ module.exports = withSourceMaps({
     if (!options.isServer) {
       config.resolve.alias['@sentry/node'] = '@sentry/browser'
     } else {
-      require('./scripts/generate-sitemap');
+      require('./src/scripts/generate-sitemap');
     }
 
     // Define an environment variable so source code can check whether or not
