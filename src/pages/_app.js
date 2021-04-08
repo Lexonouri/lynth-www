@@ -1,6 +1,6 @@
 import "tailwindcss/tailwind.css"
 import * as Sentry from '@sentry/node'
-import { RewriteFrames } from '@sentry/integrations'
+import {RewriteFrames} from '@sentry/integrations'
 import getConfig from 'next/config'
 import React, {useEffect} from 'react'
 import {useRouter} from 'next/router'
