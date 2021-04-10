@@ -8,16 +8,16 @@ export default function Home() {
   const __ = id => formatMessage({id})
 
   return (
-      <React.Fragment>
+    <React.Fragment>
 
       <div className="fixed top-0 left-0 w-screen h-screen">
         <Image
-          src="/images/background.jpg"
-          className="object-center object-cover pointer-events-none"
-          layout="fill"
-          objectFit="cover"
-          objectPosition="center center"
-          alt="Lynth - Learn. Build. Innovate. Programming learning and experience exchange community."
+            src="/images/background.jpg"
+            className="object-center object-cover pointer-events-none"
+            layout="fill"
+            objectFit="cover"
+            objectPosition="center center"
+            alt="Lynth - Learn. Build. Innovate. Programming learning and experience exchange community."
         />
       </div>
 
