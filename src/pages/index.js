@@ -1,15 +1,11 @@
 import React from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
-import {useRouter} from "next/router"
 import {useIntl} from "react-intl"
-import * as gtag from '../utils/gtag'
+import Card from "../components/card"
 
 export default function Home() {
   const {formatMessage} = useIntl()
   const __ = id => formatMessage({id})
-  const router = useRouter()
-  const {locale, locales, defaultLocale} = router
 
   return (
       <React.Fragment>
@@ -51,57 +47,38 @@ export default function Home() {
 
           <div className="w-full grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-16">
 
-            <Link href='https://join.lynth.space/'>
-              <a
-                className="border-2 border-transparent rounded-md px-8 py-6 hover:border-blue-400 bg-gray-900 bg-opacity-25 backdrop-blur transition-all shadow-xl cursor-pointer"
-                target="_blank" rel="noreferrer">
-                <p
-                  className="px-3 py-1 mb-4 inline-flex text-md leading-5 font-normal rounded-full bg-green-100 text-black">{__('available')}</p>
-                <p className="text-white text-4xl">{__('card1title')} &rarr;</p>
-                <p className="text-white text-md mt-2 font-light">{__('card1subtitle')}</p>
-              </a>
-            </Link>
+            <Card active={true} params={{
+              link: 'https://join.lynth.space/',
+              target: '_blank',
+              rel: 'noreferrer',
+              title: __('card1title'),
+              subtitle: __('card1subtitle')
+            }}/>
 
-            <Link href='https://discord.lynth.io/'>
-              <a
-                className="border-2 border-transparent rounded-md px-8 py-6 hover:border-blue-400 bg-gray-900 bg-opacity-25 backdrop-blur transition-all shadow-xl cursor-pointer"
-                onClick={() => {
-                  gtag.event({action: 'discord_inv', category: 'Discord CTA', label: 'Discord invitation redirect'})
-                }}
-                target="_blank" rel="noreferrer">
-                <p
-                  className="px-3 py-1 mb-4 inline-flex text-md leading-5 font-normal rounded-full bg-green-100 text-black">{__('available')}</p>
-                <p className="text-white text-4xl">{__('card2title')} &rarr;</p>
-                <p className="text-white text-md mt-2 font-light">{__('card2subtitle')}</p>
-              </a>
-            </Link>
+            <Card active={true} params={{
+              link: 'https://discord.lynth.io/',
+              target: '_blank',
+              rel: 'noreferrer',
+              title: __('card2title'),
+              subtitle: __('card2subtitle')
+            }}/>
 
-            <Link href='/status'>
-              <a
-                className="border-2 border-transparent rounded-md px-8 py-6 hover:border-blue-400 bg-gray-900 bg-opacity-25 backdrop-blur transition-all shadow-xl cursor-pointer"
-                rel="noreferrer">
-                <p
-                  className="px-3 py-1 mb-4 inline-flex text-md leading-5 font-normal rounded-full bg-green-100 text-black">{__('available')}</p>
-                <p className="text-white text-4xl">{__('card3title')} &rarr;</p>
-                <p className="text-white text-md mt-2 font-light">{__('card3subtitle')}</p>
-              </a>
-            </Link>
+            <Card active={true} params={{
+              link: '/status',
+              rel: 'noreferrer',
+              title: __('card3title'),
+              subtitle: __('card3subtitle')
+            }}/>
 
-            <span
-              className="border-2 border-transparent rounded-md px-8 py-6 hover:border-red-400 bg-gray-900 bg-opacity-25 backdrop-blur transition-all shadow-xl cursor-default">
-              <p
-                className="px-3 py-1 mb-4 inline-flex text-md leading-5 font-normal rounded-full bg-red-100 text-black">{__('comingSoon')}</p>
-              <p className="text-white text-4xl">{__('card4title')} &rarr;</p>
-              <p className="text-white text-md mt-2 font-light">{__('card4subtitle')}</p>
-            </span>
+            <Card active={false} params={{
+              title: __('card4title'),
+              subtitle: __('card4subtitle')
+            }}/>
 
-            <span
-              className="border-2 border-transparent rounded-md px-8 py-6 hover:border-red-400 bg-gray-900 bg-opacity-25 backdrop-blur transition-all shadow-xl cursor-default">
-              <p
-                className="px-3 py-1 mb-4 inline-flex text-md leading-5 font-normal rounded-full bg-red-100 text-black">{__('comingSoon')}</p>
-              <p className="text-white text-4xl">{__('card5title')} &rarr;</p>
-              <p className="text-white text-md mt-2 font-light">{__('card5subtitle')}</p>
-            </span>
+            <Card active={false} params={{
+              title: __('card5title'),
+              subtitle: __('card5subtitle')
+            }}/>
 
           </div>
 
