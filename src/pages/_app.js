@@ -1,6 +1,7 @@
 import "tailwindcss/tailwind.css"
 import * as Sentry from '@sentry/node'
 import {RewriteFrames} from '@sentry/integrations'
+import {ThemeProvider} from 'next-themes'
 import getConfig from 'next/config'
 import React, {useEffect} from 'react'
 import {useRouter} from 'next/router'
@@ -42,9 +43,8 @@ export function reportWebVitals(metric) {
 
 export default function App({Component, pageProps, err}) {
   const router = useRouter()
-  const {locale, defaultLocale, pathname} = router
-  const localeCopy = locales[locale]
-  const messages = localeCopy[pathname]
+  const {locale, defaultLocale} = router
+  const messages = locales[locale]
 
   useEffect(() => {
     const handleRouteChange = (url) => {
@@ -62,7 +62,7 @@ export default function App({Component, pageProps, err}) {
   }, [router.events])
 
   return (
-    <React.Fragment>
+    <ThemeProvider forcedTheme={Component.theme || undefined} defaultTheme={'system'} attribute="class">
       <Head>
         <meta name="viewport"
               content="minimum-scale=1, width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover"/>
@@ -100,7 +100,6 @@ export default function App({Component, pageProps, err}) {
       >
         <Component {...pageProps} err={err}/>
       </IntlProvider>
-
-    </React.Fragment>
+    </ThemeProvider>
   )
 }

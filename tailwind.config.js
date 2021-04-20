@@ -1,6 +1,10 @@
 module.exports = {
-  purge: ['./src/pages/**/*.js', './src/components/**/*.js'],
-  darkMode: 'media', // or 'media' or 'class'
+  future: {
+    removeDeprecatedGapUtilities: true,
+    purgeLayersByDefault: true,
+  },
+  purge: ['./src/components/**/*.{js,ts,jsx,tsx}', './src/pages/**/*.{js,ts,jsx,tsx}'],
+  darkMode: 'class', // or 'media' or 'class'
   theme: {
     extend: {},
     filter: {
@@ -18,11 +22,13 @@ module.exports = {
     extend: {
       filter: ['responsive'],
       backdropFilter: ['responsive'],
-      ringWidth: ['hover', 'active', 'group-hover'],
+      ringWidth: ['hover', 'active', 'group-hover', 'focus'],
     },
   },
   plugins: [
     require('tailwindcss-filters'),
     require('@tailwindcss/typography'),
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/line-clamp')
   ],
 }
