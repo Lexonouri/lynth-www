@@ -85,6 +85,9 @@ global_headers.push({
 })
 
 module.exports = withSourceMaps({
+  future: {
+    webpack5: true,
+  },
   productionBrowserSourceMaps: true,
   poweredByHeader: false,
   i18n: {
